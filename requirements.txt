@@ -8,5 +8,5 @@ jupyter
 Cython
 opencv-python==4.2.0.32
 tqdm 
-protobuf
+protobuf==3.17.3
 argparse
