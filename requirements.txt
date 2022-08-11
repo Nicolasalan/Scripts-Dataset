@@ -1,0 +1,12 @@
+pyamg
+Pillow
+pyblur
+protobuf==3.0.0
+tk
+lxml
+jupyter
+Cython
+opencv-python==4.2.0.32
+tqdm 
+protobuf
+argparse
