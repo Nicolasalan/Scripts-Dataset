@@ -1,3 +1,5 @@
+#!/usr/bin/env python2.7
+
 import tensorflow as tf
 import numpy as np
 from scipy import misc
