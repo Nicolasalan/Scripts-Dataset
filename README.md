@@ -1,3 +1,3 @@
-# Utility scripts for synthetic dataset generation
+# Scripts utilitários para geração de conjuntos de dados sintéticos
 
-Scripts used to generate the synthetic dataset. The code is all commented on Google Colab where the Dataset is performed.
+Scripts usados para gerar o conjunto de dados sintético. O código está todo comentado no Google Colab https://github.com/Nicolasalan/Object-Detection-Tensorflow onde é realizado o Dataset.
