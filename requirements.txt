@@ -1,7 +1,6 @@
 pyamg
 Pillow
 pyblur
-protobuf==3.0.0
 tk
 lxml
 jupyter
@@ -10,3 +9,4 @@ opencv-python==4.2.0.32
 tqdm 
 protobuf==3.17.3
 argparse
+scipy
