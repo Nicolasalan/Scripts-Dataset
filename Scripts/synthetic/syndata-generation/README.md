@@ -1,71 +1,71 @@
-# SynDataGeneration 
+# SynDataGeneration
 
-This code is used to generate synthetic scenes for the task of instance/object detection. Given images of objects in isolation from multiple views and some background scenes, it generates full scenes with multiple objects and annotations files which can be used to train an object detector. The approach used for generation works welll with region based object detection methods like [Faster R-CNN](https://github.com/rbgirshick/py-faster-rcnn).
+Este código é usado para gerar cenas sintéticas para a tarefa de detecção de instância/objeto. Dadas imagens de objetos isolados de várias visualizações e algumas cenas de fundo, ele gera cenas completas com vários objetos e arquivos de anotações que podem ser usados ​​para treinar um detector de objetos. A abordagem usada para geração funciona bem com métodos de detecção de objetos baseados em região como [Faster R-CNN](https://github.com/rbgirshick/py-faster-rcnn).
 
-## Pre-requisites 
+## Pré-requisitos
 1. OpenCV (pip install opencv-python)
-2. PIL (pip install Pillow)
-3. Poisson Blending (Follow instructions [here](https://github.com/yskmt/pb)
-4. PyBlur (pip install pyblur)
+2. PIL (almofada de instalação de pip)
+3. Mistura Poisson (Siga as instruções [aqui](https://github.com/yskmt/pb)
+4. PyBlur (pip instala pyblur)
 
-To be able to generate scenes this code assumes you have the object masks for all images. There is no pre-requisite on what algorithm is used to generate these masks as for different applications different algorithms might end up doing a good job. However, we recommend [Pixel Objectness with Bilinear Pooling](https://github.com/debidatta/pixelobjectness-bp) to automatically generate these masks. If you want to annotate the image manually we recommend GrabCut algorithms([here](https://github.com/opencv/opencv/blob/master/samples/python/grabcut.py), [here](https://github.com/cmuartfab/grabcut), [here](https://github.com/daviddoria/GrabCut))
+Para poder gerar cenas, este código pressupõe que você tenha as máscaras de objeto para todas as imagens. Não há pré-requisito sobre qual algoritmo é usado para gerar essas máscaras, pois para diferentes aplicações, diferentes algoritmos podem acabar fazendo um bom trabalho. No entanto, recomendamos [Pixel Objectness with Bilinear Pooling](https://github.com/debidatta/pixelobjectness-bp) para gerar automaticamente essas máscaras. Se você quiser anotar a imagem manualmente, recomendamos os algoritmos GrabCut([aqui](https://github.com/opencv/opencv/blob/master/samples/python/grabcut.py), [aqui](https:// github.com/cmuartfab/grabcut), [aqui](https://github.com/daviddoria/GrabCut))
 
-## Setting up Defaults
-The first section in the defaults.py file contains paths to various files and libraries. Set them up accordingly.
+## Configurando padrões
+A primeira seção do arquivo defaults.py contém caminhos para vários arquivos e bibliotecas. Configure-os de acordo.
 
-The other defaults refer to different image generating parameters that might be varied to produce scenes with different levels of clutter, occlusion, data augmentation etc. 
+Os outros padrões referem-se a diferentes parâmetros de geração de imagem que podem ser variados para produzir cenas com diferentes níveis de desordem, oclusão, aumento de dados etc.
 
-## Running the Script
+## Executando o script
 ```
-python dataset_generator.py [-h] [--selected] [--scale] [--rotation]
+python dataset_generator.py [-h] [--selecionado] [--scale] [--rotation]
                             [--num NUM] [--dontocclude] [--add_distractors]
-                            root exp
+                            exp raiz
 
-Create dataset with different augmentations
+Criar conjunto de dados com diferentes ampliações
 
-positional arguments:
-  root               The root directory which contains the images and
-                     annotations.
-  exp                The directory where images and annotation lists will be
-                     created.
+argumentos posicionais:
+  root O diretório raiz que contém as imagens e
+                     anotações.
+  exp O diretório onde as imagens e listas de anotações serão
+                     criada.
 
-optional arguments:
-  -h, --help         show this help message and exit
-  --selected         Keep only selected instances in the test dataset. Default
-                     is to keep all instances in the roo directory.
-  --scale            Add scale augmentation.Default is to not add scale
-                     augmentation.
-  --rotation         Add rotation augmentation.Default is to not add rotation
-                     augmentation.
-  --num NUM          Number of times each image will be in dataset
-  --dontocclude      Add objects without occlusion. Default is to produce
-                     occlusions
-  --add_distractors  Add distractors objects. Default is to not use
-                     distractors
+argumentos opcionais:
+  -h, --help mostra esta mensagem de ajuda e sai
+  --selected Mantém apenas instâncias selecionadas no conjunto de dados de teste. Predefinição
+                     é manter todas as instâncias no diretório roo.
+  --scale Adicionar aumento de escala. O padrão é não adicionar escala
+                     aumento.
+  --rotation Adicionar aumento de rotação. O padrão é não adicionar rotação
+                     aumento.
+  --num NUM Número de vezes que cada imagem estará no conjunto de dados
+  --dontocclude Adiciona objetos sem oclusão. O padrão é produzir
+                     oclusões
+  --add_distractors Adiciona objetos distratores. O padrão é não usar
+                     distrações
 ```
 
-## Training an object detector
-The code produces all the files required to train an object detector. The format is directly useful for Faster R-CNN but might be adapted for different object detectors too. The different files produced are:
-1. __labels.txt__ - Contains the labels of the objects being trained
-2. __annotations/*.xml__ - Contains annotation files in XML format which contain bounding box annotations for various scenes
-3. __images/*.jpg__ - Contain image files of the synthetic scenes in JPEG format 
-4. __train.txt__ - Contains list of synthetic image files and corresponding annotation files
+## Treinando um detector de objetos
+O código produz todos os arquivos necessários para treinar um detector de objetos. O formato é diretamente útil para Faster R-CNN, mas também pode ser adaptado para diferentes detectores de objetos. Os diferentes arquivos produzidos são:
+1. __labels.txt__ - Contém os rótulos dos objetos que estão sendo treinados
+2. __annotations/*.xml__ - Contém arquivos de anotação em formato XML que contêm anotações de caixa delimitadora para várias cenas
+3. __images/*.jpg__ - Contém arquivos de imagem das cenas sintéticas em formato JPEG
+4. __train.txt__ - Contém uma lista de arquivos de imagem sintética e arquivos de anotação correspondentes
 
-There are tutorials describing how one can adapt Faster R-CNN code to run on a custom dataset like:
+Existem tutoriais que descrevem como se pode adaptar o código Faster R-CNN para executar em um conjunto de dados personalizado como:
 1. https://github.com/rbgirshick/py-faster-rcnn/issues/243
 2. http://sgsai.blogspot.com/2016/02/training-faster-r-cnn-on-custom-dataset.html
 
-## Paper
+## Papel
 
-The code was used to generate synthetic scenes for the paper [Cut, Paste and Learn: Surprisingly Easy Synthesis for Instance Detection](https://arxiv.org/abs/1708.01642). 
+O código foi usado para gerar cenas sintéticas para o artigo [Cut, Paste and Learn: Surprisingly Easy Synthesis for Instance Detection](https://arxiv.org/abs/1708.01642).
 
-If you find our code useful in your research, please consider citing:
+Se você achar nosso código útil em sua pesquisa, considere citar:
 ```
 @InProceedings{Dwibedi_2017_ICCV,
-author = {Dwibedi, Debidatta and Misra, Ishan and Hebert, Martial},
-title = {Cut, Paste and Learn: Surprisingly Easy Synthesis for Instance Detection},
+autor = {Dwibedi, Debidatta e Misra, Ishan e Hebert, Martial},
+title = {Recortar, Colar e Aprender: Síntese Surpreendentemente Fácil para Detecção de Instâncias},
 booktitle = {The IEEE International Conference on Computer Vision (ICCV)},
-month = {Oct},
-year = {2017}
+mês = {out},
+ano = {2017}
 }
 ```
